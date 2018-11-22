@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'chmod +x gradlew && ./gradlew test'
+                sh 'chmod +x gradlew'
+                sh './gradlew test || true'
             }
         }
         stage('Build') {
@@ -16,6 +17,11 @@ pipeline {
                 sh 'java -jar build/lib/bootJar.jar'
                 sh 'curl localhost:8181'
             }
+        }
+    }
+    post {
+        always {
+            junit 'build/reports/**/*.xml'
         }
     }
 }
