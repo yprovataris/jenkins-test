@@ -1,10 +1,15 @@
 pipeline {
     agent any 
     stages {
-        stage('Test') {
+        stage('Setup') {
             steps {
                 sh 'chmod +x gradlew'
-                sh './gradlew test || true'
+                sh './gradlew clean'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './gradlew clean test || true'
             }
         }
         stage('Build') {
@@ -14,7 +19,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'java -jar build/lib/bootJar.jar'
+                sh 'java -jar build/libs/jenkins-test-0.0.1-SNAPSHOT.jar'
                 sh 'curl localhost:8181'
             }
         }
