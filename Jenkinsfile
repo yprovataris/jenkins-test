@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                sh './gradlew build'
+                sh 'chmod +x gradlew && ./gradlew build'
             }
         }
         stage('Test') { 
             steps {
-                sh './gradlew test'
+                sh 'chmod +x gradlew && ./gradlew test'
             }
         }
         stage('Deploy') { 
