@@ -1,19 +1,20 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') { 
-            steps {
-                sh 'chmod +x gradlew && ./gradlew build'
-            }
-        }
-        stage('Test') { 
+        stage('Test') {
             steps {
                 sh 'chmod +x gradlew && ./gradlew test'
             }
         }
-        stage('Deploy') { 
+        stage('Build') {
             steps {
-                sh 'echo executing deploy...'
+                sh './gradlew bootJar'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'java -jar build/lib/bootJar.jar'
+                sh 'curl localhost:8181'
             }
         }
     }
