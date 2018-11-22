@@ -26,6 +26,7 @@ pipeline {
     }
     post {
         always {
+            sh 'tree build'
             junit 'build/reports/**/*.xml'
         }
     }
